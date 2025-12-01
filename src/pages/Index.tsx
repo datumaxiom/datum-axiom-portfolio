@@ -347,7 +347,7 @@ const Index = () => {
           {/* Social Links */}
           <div className="flex justify-center gap-6 mb-12">
             <a
-              href="datum.axiom@gmail.com"
+              href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox"
               className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
               aria-label="Email"
             >
@@ -363,7 +363,7 @@ const Index = () => {
               <Github className="w-6 h-6" />
             </a>
             <a
-              href="https://linkedin.com/in/aadeshabiswas"
+              href=""
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
