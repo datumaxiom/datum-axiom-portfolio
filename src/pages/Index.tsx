@@ -10,9 +10,6 @@ import excelImg from "@/assets/tools/excel.jpeg";
 import powerAutoImg from "@/assets/tools/powerautomate.jpeg";
 import powerApps from "@/assets/tools/powerapps.jpeg";
 import copilot from "@/assets/tools/copilot.jpeg";
-
-
-
 import {
   Database, 
   Cog, 
