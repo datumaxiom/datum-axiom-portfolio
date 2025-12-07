@@ -8,7 +8,7 @@ import powerbiImg from "@/assets/tools/powerbi.jpeg";
 import pythonImg from "@/assets/tools/python.jpeg";
 import excelImg from "@/assets/tools/excel.jpeg";
 import powerAutoImg from "@/assets/tools/powerautomate.jpeg";
-import powerAppsfrom "@/assets/tools/powerapps.jpeg";
+import powerApps from "@/assets/tools/powerapps.jpeg";
 import copilot from "@/assets/tools/copilot.jpeg";
 
 
