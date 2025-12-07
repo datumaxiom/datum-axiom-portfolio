@@ -8,6 +8,8 @@ import powerbiImg from "@/assets/tools/powerbi.jpeg";
 import pythonImg from "@/assets/tools/python.jpeg";
 import excelImg from "@/assets/tools/excel.jpeg";
 import powerAutoImg from "@/assets/tools/powerautomate.jpeg";
+import powerAppsfrom "@/assets/tools/powerapps.jpeg";
+import copilot from "@/assets/tools/copilot.jpeg";
 
 
 
@@ -37,6 +39,8 @@ const tools = [
   { name: "Python", image: pythonImg },
   { name: "Excel", image: excelImg },
   { name: "Power Automate", image: powerAutoImg }
+  { name: "Power Apps", image: powerApps }
+  { name: "Copilot", image: copilot }
 ];
 
 const services = [
