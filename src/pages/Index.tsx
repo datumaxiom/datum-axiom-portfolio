@@ -216,7 +216,7 @@ const Index = () => {
           {/* Tools & Expertise */}
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-center mb-12">Tools & Expertise</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-9">
               {tools.map((tool) => (
                 
                 <div key={tool.name} className="flex flex-col items-center gap-2">
