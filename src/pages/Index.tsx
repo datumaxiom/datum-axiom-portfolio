@@ -35,9 +35,9 @@ const tools = [
   { name: "Power BI", image: powerbiImg },
   { name: "Python", image: pythonImg },
   { name: "Excel", image: excelImg },
-  { name: "Power Automate", image: powerAutoImg }
-  { name: "Power Apps", image: powerApps }
-  { name: "Copilot", image: copilot }
+  { name: "Power Automate", image: powerAutoImg },
+  { name: "Power Apps", image: powerApps },
+  { name: "Copilot", image: copilot },
 ];
 
 const services = [
