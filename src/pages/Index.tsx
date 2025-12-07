@@ -166,7 +166,7 @@ const Index = () => {
       <nav className="fixed top-0 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50 border-b">
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
-            <span className="text-xl font-bold text-primary">Portfolio</span>
+            <span className="text-xl font-bold text-primary"></span>
             <div className="flex gap-6">
               {navigation.map((item) => (
                 item.href.startsWith("#") ? (
