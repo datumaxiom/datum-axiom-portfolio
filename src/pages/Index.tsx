@@ -11,10 +11,10 @@ import powerAutoImg from "@/assets/tools/powerautomate.jpeg";
 import powerApps from "@/assets/tools/powerapps.jpeg";
 import copilot from "@/assets/tools/copilot.jpeg";
 import {
-  Database, 
-  Cog, 
-  FileSpreadsheet, 
-  Bot, 
+  Database,
+  Cog,
+  FileSpreadsheet,
+  Bot,
   Workflow,
   BarChart3,
   Github,
@@ -26,18 +26,27 @@ import { useToast } from "@/hooks/use-toast";
 
 const navigation = [
   { name: "About", href: "#about" },
-  { name: "Projects", href: "#projects" },
-  { name: "Blog", href: "/blog" },
+  { name: "My Work", href: "#projects" },
+  { name: "Reads", href: "about" },
+  { name: "Writes", href: "#about" },
+  { name: "Listens", href: "#about" },
+  { name: "Learning", href: "#about" },
   { name: "Contact", href: "#contact" },
 ];
 
+const expertise = [
+  { name: "Strategy Consulting" },
+  { name: "Machine Learning" },
+  { name: "AI Powered Automation" },
+  { name: "NLP &GenAI" },
+  { name: "Data Visualization" }
+];
 const tools = [
   { name: "Power BI", image: powerbiImg },
   { name: "Python", image: pythonImg },
   { name: "Excel", image: excelImg },
   { name: "Power Automate", image: powerAutoImg },
-  { name: "Power Apps", image: powerApps },
-  { name: "Copilot", image: copilot },
+  { name: "Power Apps", image: powerApps }
 ];
 
 const services = [
@@ -66,7 +75,7 @@ const services = [
     description: "Build intelligent AI agents that can automate complex decision-making processes.",
     icon: Bot,
   },
-  
+
 ];
 
 const sampleProjects = [
@@ -166,7 +175,11 @@ const Index = () => {
       <nav className="fixed top-0 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50 border-b">
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
-            <span className="text-xl font-bold text-primary"></span>
+            <div ><h1 className="caveat-header">Datum Axiom</h1>
+              <h6 className="arimo-header-para">Helping businesses see clearly, decide faster, and grow smarter
+              </h6>
+            </div>
+
             <div className="flex gap-6">
               {navigation.map((item) => (
                 item.href.startsWith("#") ? (
@@ -194,31 +207,51 @@ const Index = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-4">
+      <section id="about" className="pt-32 pb-16 px-4">
         <div className="container mx-auto text-center">
           <h1 className="text-5xl font-bold mb-6 animate-fade-in">
-            Datum Axiom
+            About
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8 animate-fade-in">
-            Desire to turn your everyday data chaos into smooth, smart systems that actually work for you?
-            Think AI-driven solutions that handle the routine, workflows that fix themselves, and insights that guide better decisions without the guesswork. My focus is simple: help you save time, avoid headaches, and unlock opportunities hiding in plain sight.
-            If you want data-driven clarity and intelligent automation, let's connect.
+          <p className="text-xl text-muted-foreground mx-2.5 mb-8 animate-fade-in">
+            Desire to turn your everyday data chaos into smooth, smart systems that actually work for you? Think AI-driven solutions that handle the routine, workflows that fix themselves, and insights that guide better decisions without the guesswork. My focus is simple: help you save time, avoid headaches, and unlock opportunities hiding in plain sight. If you want data-driven clarity and intelligent automation, let's connect.
           </p>
+          <div className="text-xl text-muted-foreground mx-96 mb-8">
+            <ul style={{ listStyleType: "disc" }}>
+              <li>Business Intelligence for E-Commerce & Retail</li>
+              <li>Automated Reporting & Dashboards Specialist</li>
+              <li>Financial Analytics for Startups</li>
+              <li>Improve existing workflows and creation of new processes</li>
+            </ul>
+          </div>
           <Button size="lg" asChild className="animate-fade-in">
             <a href="#contact">Get in Touch</a>
           </Button>
         </div>
       </section>
-
-      {/* About Section */}
       <section id="about" className="py-16 px-4 bg-muted/50">
         <div className="container mx-auto">
-          {/* Tools & Expertise */}
+          {/*  Expertise */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold text-center mb-12">Tools & Expertise</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-9">
+            <h2 className="text-3xl font-bold text-center mb-12">Core Expertise</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 lg:grid-rows-1gap-9">
+              {expertise.map((expertise) => (
+                <div key={expertise.name} className="flex flex-col items-center gap-2">
+                  <img
+                    src={expertise.image}
+                    alt={expertise.name}
+                    className="w-12 h-12 object-contain"
+                  />
+                  <p className="text-center">{expertise.name}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* Tech Stack */}
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-center mb-12">Tech Stack</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 lg:grid-rows-1 gap-9">
               {tools.map((tool) => (
-                
+
                 <div key={tool.name} className="flex flex-col items-center gap-2">
                   <img
                     src={tool.image}
@@ -230,36 +263,15 @@ const Index = () => {
               ))}
             </div>
           </div>
-
-          {/* Services */}
-          <div>
-            <h2 className="text-3xl font-bold text-center mb-12">Services Offered</h2>
-            <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-6">
-              {services.map((service) => (
-                <Card key={service.title} className="hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <service.icon className="w-10 h-10 text-primary mb-4" />
-                    <CardTitle>{service.title}</CardTitle>
-                    <CardDescription>{service.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button variant="outline" className="w-full" asChild>
-                      <a href="#contact">Learn More</a>
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-16 px-4">
+      <section id="projects" className="py-10 px-4">
         <div className="container mx-auto">
           {/* Sample Projects */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold text-center mb-12">Sample Projects</h2>
+            <h2 className="text-3xl font-bold text-center mb-12">View My Work</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {sampleProjects.map((project) => (
                 <Card key={project.title} className="overflow-hidden hover:shadow-lg transition-shadow">
@@ -286,35 +298,8 @@ const Index = () => {
               ))}
             </div>
           </div>
-
-          {/* Digital Products */}
-          {/* <div>
-            <h2 className="text-3xl font-bold text-center mb-12">Digital Products</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {digitalProducts.map((product) => (
-                <Card key={product.title} className="overflow-hidden hover:shadow-lg transition-shadow">
-                  <img
-                    src={product.image}
-                    alt={product.title}
-                    className="w-full h-48 object-cover"
-                  />
-                  <CardHeader>
-                    <CardTitle>{product.title}</CardTitle>
-                    <CardDescription>{product.description}</CardDescription>
-                    <p className="text-2xl font-bold text-primary">{product.price}</p>
-                  </CardHeader>
-                  <CardContent>
-                    <Button className="w-full" asChild>
-                      <a href={product.buyLink}>Buy Now</a>
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div> */}
         </div>
       </section>
-
       {/* Newsletter Section */}
       <section className="py-16 px-4 bg-muted/50">
         <div className="container mx-auto max-w-2xl text-center">
@@ -339,7 +324,6 @@ const Index = () => {
           </form>
         </div>
       </section>
-
       {/* Contact Section */}
       <section id="contact" className="py-16 px-4">
         <div className="container mx-auto max-w-4xl">
@@ -364,7 +348,7 @@ const Index = () => {
               <Github className="w-6 h-6" />
             </a>
             <a
-              href=""
+              href="https://www.linkedin.com/in/aadesha99/"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
@@ -377,8 +361,10 @@ const Index = () => {
           {/* Contact Form */}
           <Card>
             <CardHeader>
+              <h1></h1>
               <CardTitle>Send a Message</CardTitle>
-              <CardDescription>Fill out the form below and I'll get back to you soon.</CardDescription>
+              <CardDescription>Do you have a project I can help you with? Let’s talk about it.
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleContactSubmit} className="space-y-4">
@@ -413,7 +399,7 @@ const Index = () => {
       {/* Footer */}
       <footer className="py-8 px-4 border-t bg-muted/30">
         <div className="container mx-auto text-center text-sm text-muted-foreground">
-          <p>© 2025 Datum Axiom -- Crafted with purpose by Aadesha Biswas</p>
+          <p>© 2026 Datum Axiom -- Crafted with purpose by Aadesha Biswas</p>
         </div>
       </footer>
     </div>
