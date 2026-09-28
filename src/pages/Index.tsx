@@ -27,18 +27,16 @@ import { useToast } from "@/hooks/use-toast";
 const navigation = [
   { name: "About", href: "#about" },
   { name: "My Work", href: "#projects" },
-  { name: "Reads", href: "about" },
-  { name: "Writes", href: "#about" },
-  { name: "Listens", href: "#about" },
-  { name: "Learning", href: "#about" },
-  { name: "Contact", href: "#contact" },
+  { name: "Resources", href: "#resources" },
+  { name: "Contact", href: "#contact" }
 ];
 
 const expertise = [
   { name: "Strategy Consulting" },
   { name: "Machine Learning" },
   { name: "AI Powered Automation" },
-  { name: "NLP &GenAI" },
+  { name: "NLP &  GenAI" },
+  { name: "Analytics" },
   { name: "Data Visualization" }
 ];
 const tools = [
@@ -168,16 +166,17 @@ const Index = () => {
     });
     (e.target as HTMLFormElement).reset();
   };
+  const resumeId = "11oDAi4PM-XOKB7RpZp8CuTXQaTlaej1W";
+  const resumeUrl = `https://drive.google.com/file/d/${resumeId}/preview`;
+  const [showResume, setShowResume] = useState(false);
 
   return (
     <div className="min-h-screen">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50 border-b">
+      <nav className="navbar fixed top-0 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50 border-b">
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
-            <div ><h1 className="caveat-header">Datum Axiom</h1>
-              <h6 className="arimo-header-para">Helping businesses see clearly, decide faster, and grow smarter
-              </h6>
+            <div ><h1 className="caveat-header">Aadesha Biswas</h1>
             </div>
 
             <div className="flex gap-6">
@@ -186,8 +185,8 @@ const Index = () => {
                   <a
                     key={item.name}
                     href={item.href}
-                    className={`text-sm font-medium transition-colors hover:text-primary ${activeSection === item.href.slice(1) ? "text-primary" : "text-muted-foreground"
-                      }`}
+                    className={`text-sm font-bold transition-colors hover:text-primary ${activeSection === item.href.slice(1) ? "text-red-900" : "text-muted-foreground"
+                  }`}
                   >
                     {item.name}
                   </a>
@@ -195,7 +194,7 @@ const Index = () => {
                   <Link
                     key={item.name}
                     to={item.href}
-                    className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                    className="text-sm font-bold text- text-muted-foreground transition-colors hover:text-primary"
                   >
                     {item.name}
                   </Link>
@@ -209,9 +208,9 @@ const Index = () => {
       {/* Hero Section */}
       <section id="about" className="pt-32 pb-16 px-4">
         <div className="container mx-auto text-center">
-          <h1 className="text-5xl font-bold mb-6 animate-fade-in">
+          {/* <h1 className="text-5xl font-bold mb-6 animate-fade-in">
             About
-          </h1>
+          </h1> */}
           <p className="text-xl text-muted-foreground mx-2.5 mb-8 animate-fade-in">
             Desire to turn your everyday data chaos into smooth, smart systems that actually work for you? Think AI-driven solutions that handle the routine, workflows that fix themselves, and insights that guide better decisions without the guesswork. My focus is simple: help you save time, avoid headaches, and unlock opportunities hiding in plain sight. If you want data-driven clarity and intelligent automation, let's connect.
           </p>
@@ -223,9 +222,6 @@ const Index = () => {
               <li>Improve existing workflows and creation of new processes</li>
             </ul>
           </div>
-          <Button size="lg" asChild className="animate-fade-in">
-            <a href="#contact">Get in Touch</a>
-          </Button>
         </div>
       </section>
       <section id="about" className="py-16 px-4 bg-muted/50">
@@ -233,7 +229,7 @@ const Index = () => {
           {/*  Expertise */}
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-center mb-12">Core Expertise</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 lg:grid-rows-1gap-9">
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 lg:grid-rows-1 gap-9">
               {expertise.map((expertise) => (
                 <div key={expertise.name} className="flex flex-col items-center gap-2">
                   <img
@@ -267,7 +263,7 @@ const Index = () => {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-10 px-4">
+      <section className="py-10 px-4">
         <div className="container mx-auto">
           {/* Sample Projects */}
           <div className="mb-16">
@@ -300,39 +296,43 @@ const Index = () => {
           </div>
         </div>
       </section>
-      {/* Newsletter Section */}
-      <section className="py-16 px-4 bg-muted/50">
-        <div className="container mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold mb-4">Stay Updated</h2>
-          <p className="text-muted-foreground mb-8">
-            Subscribe to my newsletter for the latest insights, tutorials, and project updates.
-          </p>
-          <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-4">
-            <Input
-              type="text"
-              placeholder="Your name"
-              required
-              className="flex-1"
-            />
-            <Input
-              type="email"
-              placeholder="Your email"
-              required
-              className="flex-1"
-            />
-            <Button type="submit">Subscribe</Button>
-          </form>
-        </div>
-      </section>
       {/* Contact Section */}
       <section id="contact" className="py-16 px-4">
         <div className="container mx-auto max-w-4xl">
           <h2 className="text-3xl font-bold text-center mb-12">Get in Touch</h2>
+            <div className="mb-6 text-center">
+              <button
+                type="button"
+                onClick={() => setShowResume((prev) => !prev)}
+                className="mt-5 inline-flex items-center gap-2 rounded-full bg-black px-6 py-3 font-medium text-white transition-all hover:-translate-y-0.5 hover:bg-gray-800"
+              >
+                {showResume ? (
+                  <>
+                    Close Resume
+                    <span>↑</span>
+                  </>
+                ) : (
+                  <>
+                    Hire Me
+                    <span>↗</span>
+                  </>
+                )}
+              </button>
+            </div>
 
+            {showResume && (
+              <div className="mt-8 overflow-hidden rounded-2xl border border-gray-200 shadow-lg">
+                <iframe
+                  src={resumeUrl}
+                  title="My Resume"
+                  className="h-[800px] w-full"
+                />
+              </div>
+            )}
           {/* Social Links */}
           <div className="flex justify-center gap-6 mb-12">
             <a
-              href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox"
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=aadesha.biswas@gmail.com"
               className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
               aria-label="Email"
             >
@@ -358,48 +358,14 @@ const Index = () => {
             </a>
           </div>
 
-          {/* Contact Form */}
-          <Card>
-            <CardHeader>
-              <h1></h1>
-              <CardTitle>Send a Message</CardTitle>
-              <CardDescription>Do you have a project I can help you with? Let’s talk about it.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleContactSubmit} className="space-y-4">
-                <div>
-                  <Input
-                    type="text"
-                    placeholder="Your Name"
-                    required
-                  />
-                </div>
-                <div>
-                  <Input
-                    type="email"
-                    placeholder="Your Email"
-                    required
-                  />
-                </div>
-                <div>
-                  <Textarea
-                    placeholder="Your Message"
-                    required
-                    rows={5}
-                  />
-                </div>
-                <Button type="submit" className="w-full">Send Message</Button>
-              </form>
-            </CardContent>
-          </Card>
+
         </div>
       </section>
 
       {/* Footer */}
       <footer className="py-8 px-4 border-t bg-muted/30">
         <div className="container mx-auto text-center text-sm text-muted-foreground">
-          <p>© 2026 Datum Axiom -- Crafted with purpose by Aadesha Biswas</p>
+          <p>© Crafted with purpose by Aadesha Biswas</p>
         </div>
       </footer>
     </div>

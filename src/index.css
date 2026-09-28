@@ -98,17 +98,17 @@ All colors MUST be HSL.
     font-family: "Caveat", cursive;
     font-optical-sizing: auto;
     font-weight: 700;
-    color: red;
-    font-size:xx-large;
+    color:red;
+    font-size: xx-large;
   }
 
-  
-.arimo-header-para {
-  font-family: "Arimo", sans-serif;
-  font-weight: 400;
-  color: black;
-  font-size: 10px;
-}
+
+  .arimo-header-para {
+    font-family: "Arimo", sans-serif;
+    font-weight: 400;
+    color: black;
+    font-size: 10px;
+  }
 
   body {
     @apply bg-background text-foreground;
@@ -117,4 +117,12 @@ All colors MUST be HSL.
   html {
     scroll-behavior: smooth;
   }
+
+  .navbar {
+    background: #8BDEDA;
+background: -webkit-linear-gradient(to left, #ffdde1, #ff9ba6, #b9ece9);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to left, #ffdde1,#ff9ba6, #b9ece9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  }
 }
+/* #E17DC2 43ADD0 ada4e6*/
