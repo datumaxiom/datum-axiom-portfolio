@@ -1,422 +1,709 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import powerbiImg from "@/assets/tools/powerbi.jpeg";
-import pythonImg from "@/assets/tools/python.jpeg";
-import excelImg from "@/assets/tools/excel.jpeg";
-import powerAutoImg from "@/assets/tools/powerautomate.jpeg";
-
-
-
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
-  Database, 
-  Cog, 
-  FileSpreadsheet, 
-  Bot, 
-  Workflow,
-  BarChart3,
+  ArrowDown,
+  ArrowRight,
+  ArrowUpRight,
   Github,
   Linkedin,
   Mail,
-  ExternalLink
+  Phone,
+  X,
 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import FlashlightReveal from "@/components/portfolio/FlashlightReveal";
 
-const navigation = [
-  { name: "About", href: "#about" },
-  { name: "Projects", href: "#projects" },
-  { name: "Blog", href: "/blog" },
-  { name: "Contact", href: "#contact" },
-];
+gsap.registerPlugin(ScrollTrigger);
 
-const tools = [
-  { name: "Power BI", image: powerbiImg },
-  { name: "Python", image: pythonImg },
-  { name: "Excel", image: excelImg },
-  { name: "Power Automate", image: powerAutoImg }
-];
+const resumeUrl = new URL("./Aadesha Biswas CV.pdf", import.meta.url).href;
+const email = "aadesha.biswas@gmail.com";
+const phone = "+918319842489";
+const linkedin = "https://www.linkedin.com/in/aadesha99/";
+const github = "https://github.com/Aadesha-1";
 
-const services = [
+const projects = [
   {
-    title: "Data Insights & BI Dashboards",
-    description: "Transform your data into interactive dashboards and actionable insights with Power BI and Tableau.",
-    icon: BarChart3,
+    number: "01",
+    title: "Cost Analysis Report",
+    category: "Cost analysis",
+    note: "A resume-listed project",
+    visual: "cost",
   },
   {
-    title: "Process Automation & Improvement",
-    description: "Automate repetitive tasks and workflows using Power Automate and Python scripts.",
-    icon: Cog,
+    number: "02",
+    title: "Operations Management",
+    category: "Operational analytics",
+    note: "A resume-listed project",
+    visual: "forecast",
   },
   {
-    title: "Data Cleaning & Transformation",
-    description: "Clean, structure, and prepare your data for analysis using Python, SQL, and Excel.",
-    icon: Database,
+    number: "03",
+    title: "Departmental Dashboard",
+    category: "Business intelligence",
+    note: "A resume-listed project",
+    visual: "dashboard",
   },
   {
-    title: "Workflow Optimization",
-    description: "Streamline your business processes and improve efficiency through data-driven optimization.",
-    icon: Workflow,
+    number: "04",
+    title: "Audit Monitoring Dashboard",
+    category: "Audit & governance",
+    note: "A resume-listed project",
+    visual: "workforce",
   },
   {
-    title: "AI Agent",
-    description: "Build intelligent AI agents that can automate complex decision-making processes.",
-    icon: Bot,
-  },
-  
-];
-
-const sampleProjects = [
-  {
-    title: "Sales Dashboard Analytics",
-    description: "Interactive Power BI dashboard for real-time sales performance tracking",
-    image: "/placeholder.svg",
-    link: "#",
-    github: "#",
+    number: "05",
+    title: "Workforce Planning & Optimization",
+    category: "People analytics",
+    note: "A resume-listed project",
+    visual: "workforce",
   },
   {
-    title: "Automated Report Generator",
-    description: "Python-based automation tool for generating weekly performance reports",
-    image: "/placeholder.svg",
-    link: "#",
-    github: "#",
+    number: "06",
+    title: "Span of Control Analysis",
+    category: "Workforce analysis",
+    note: "A resume-listed project",
+    visual: "cost",
   },
   {
-    title: "Data Pipeline ETL",
-    description: "End-to-end data pipeline for extracting, transforming, and loading enterprise data",
-    image: "/placeholder.svg",
-    link: "#",
-    github: "#",
-  },
-];
-
-const digitalProducts = [
-  {
-    title: "Power BI Dashboard Template",
-    description: "Professional sales dashboard template with 10+ pre-built visualizations",
-    price: "$49",
-    image: "/placeholder.svg",
-    buyLink: "#",
+    number: "07",
+    title: "Attrition Analysis & Forecasting",
+    category: "Predictive analysis",
+    note: "A resume-listed project",
+    visual: "forecast",
   },
   {
-    title: "Excel Automation Toolkit",
-    description: "Collection of VBA macros and formulas for common business tasks",
-    price: "$29",
-    image: "/placeholder.svg",
-    buyLink: "#",
+    number: "08",
+    title: "Attendance Management",
+    category: "People operations",
+    note: "A resume-listed project",
+    visual: "dashboard",
   },
   {
-    title: "Python Data Analysis Scripts",
-    description: "Ready-to-use Python scripts for data cleaning and analysis",
-    price: "$39",
-    image: "/placeholder.svg",
-    buyLink: "#",
+    number: "09",
+    title: "Performance Management Analysis",
+    category: "Performance analytics",
+    note: "A resume-listed project",
+    visual: "workforce",
   },
 ];
 
-const Index = () => {
-  const [activeSection, setActiveSection] = useState("about");
-  const { toast } = useToast();
+const skillGroups = [
+  {
+    number: "01",
+    title: "Programming & analytics",
+    skills: "Python, Pandas, NumPy, Matplotlib, Seaborn, Git, GitHub",
+  },
+  {
+    number: "02",
+    title: "Machine learning & AI",
+    skills: "PyTorch, TensorFlow, Scikit-learn, model versioning, CI/CD, MLflow",
+  },
+  {
+    number: "03",
+    title: "Business intelligence",
+    skills:
+      "Power BI, DAX, M Query, RLS, workforce and people analytics, KPI design, performance measurement, predictive and statistical analysis",
+  },
+  {
+    number: "04",
+    title: "Data, ETL & Excel",
+    skills:
+      "SQL, data collection, cleaning, modeling, validation, integration, wrangling, lakes, warehouses, governance, audit, VBA, macros, advanced functions, Power Query",
+  },
+  {
+    number: "05",
+    title: "Platforms & enterprise",
+    skills:
+      "Power Automate, Power Apps, Planner, Project, SharePoint, Visio, Forms, SAP, SuccessFactors, Workday, Quickbase",
+  },
+  {
+    number: "06",
+    title: "How I work",
+    skills:
+      "Stakeholder engagement, cross-functional collaboration, strategic and project planning, change management, process optimization, innovation and automation",
+  },
+];
+
+const experiences = [
+  {
+    period: "APR 2025 — NOW",
+    company: "Accenture",
+    role: "Analytics and Modeling Analyst",
+    location: "Bengaluru",
+    highlights: [
+      "Built automated ETL pipelines and Power BI dashboards with Python, SQL, Power BI and Excel VBA; reporting turnaround time reduced by 30%.",
+      "Applied data modeling, statistical analysis, regression and machine learning to forecasting, business planning and cost optimization.",
+      "Used exploratory, trend and root-cause analysis to identify performance drivers and uncover 10% operational-efficiency opportunities.",
+      "Collaborated with cross-functional stakeholders to translate requirements into scalable analytics and AI-driven solutions, improving reporting automation and decision support.",
+    ],
+  },
+  {
+    period: "JUN 2022 — MAR 2025",
+    company: "G R Infraprojects Limited",
+    role: "Assistant Manager · Senior Executive · Executive",
+    location: "Gurugram",
+    highlights: [
+      "Architected BI infrastructure and 15+ interactive DAX and M Query dashboards, reducing manual effort by 60% and improving operational efficiency by 15%.",
+      "Designed classification and regression models for operational inefficiencies, resulting in a 10% cost reduction through data-driven resource allocation.",
+      "Automated data processing workflows, reducing manual intervention and errors by 10% while improving accuracy, compliance and reporting efficiency.",
+      "Delivered executive reports and presentations, and partnered across functions to shape analytics around business needs and risk mitigation.",
+    ],
+  },
+  {
+    period: "DEC 2018 — APR 2019",
+    company: "Infosys BPM",
+    role: "Process Executive",
+    location: "Bengaluru",
+    highlights: [
+      "Customer support and technical Openreach for British Telecom (UK shift).",
+      "Recommended products and service improvements to meet customer requirements; maintained positive customer relationships and documentation.",
+    ],
+  },
+];
+
+function ProjectDrawing({ kind }: { kind: string }) {
+  return (
+    <svg
+      className={`project-drawing project-drawing--${kind}`}
+      viewBox="0 0 600 340"
+      role="img"
+      aria-label="Abstract editorial illustration"
+    >
+      <path className="drawing-grid" d="M56 70H544M56 130H544M56 190H544M56 250H544M56 310H544M116 36V310M216 36V310M316 36V310M416 36V310M516 36V310" />
+      {kind === "dashboard" && (
+        <>
+          <path className="drawing-line drawing-line--yellow" d="M56 243C108 234 117 163 174 181S254 230 310 153 396 119 431 143 488 107 544 68" />
+          <path className="drawing-line drawing-line--ivory" d="M56 272C115 258 145 236 190 248S280 196 330 214 435 159 480 177 520 152 544 142" />
+          <circle className="drawing-dot" cx="431" cy="143" r="6" />
+          <circle className="drawing-dot drawing-dot--red" cx="310" cy="153" r="5" />
+        </>
+      )}
+      {kind === "cost" && (
+        <>
+          <path className="drawing-line drawing-line--red" d="M56 80C135 119 139 197 220 189S315 111 368 148 443 237 544 252" />
+          <path className="drawing-line drawing-line--yellow" d="M56 278C132 257 145 247 213 251S289 207 350 220 432 178 544 159" />
+          <path className="drawing-axis" d="M56 310H544" />
+        </>
+      )}
+      {kind === "workforce" && (
+        <>
+          <path className="drawing-ring" d="M300 75a90 90 0 1 1-1 0m1 0v90l66 42" />
+          <path className="drawing-line drawing-line--yellow" d="M104 264h72v-43h72v-57h72v-32h72v-53h72" />
+          <circle className="drawing-dot" cx="300" cy="165" r="5" />
+        </>
+      )}
+      {kind === "forecast" && (
+        <>
+          <path className="drawing-line drawing-line--ivory" d="M56 248C110 224 145 238 192 208S272 174 319 187 394 142 429 155" />
+          <path className="drawing-line drawing-line--yellow drawing-line--dashed" d="M429 155C469 167 493 119 544 105" />
+          <path className="drawing-band" d="M429 128C467 139 493 90 544 75V142C493 153 468 193 429 181Z" />
+          <circle className="drawing-dot" cx="429" cy="155" r="6" />
+        </>
+      )}
+    </svg>
+  );
+}
+
+function PullingHand() {
+  return (
+    <svg
+      className="pulling-hand"
+      id="pull-hand"
+      viewBox="0 0 340 300"
+      role="img"
+      aria-label="Illustrated hand gently pulling the collaboration button"
+    >
+      <g className="hand-ink">
+        <path d="M22 276c28-14 52-28 76-43 12-8 22-13 34-18 17-7 32-16 45-27l28-25c9-8 20-8 27 0 7 9 2 19-6 28l-18 19 43-34c10-8 22-7 28 2 5 8 1 18-8 26l-34 31 37-21c11-7 21-4 26 5 4 9-1 17-11 24l-33 23 25-8c11-4 20 1 22 9 2 8-4 15-15 19l-66 25c-24 9-42 12-64 11-27-1-49-9-67-18l-44-22Z" />
+        <path d="M132 215c-8-12-5-23 6-32l38-34c8-8 19-8 26 0 7 8 5 17-4 26M111 229c-8-10-6-21 4-29l31-27c9-8 19-8 25 0 6 8 4 17-4 24" />
+        <path d="M44 264c22 9 45 13 67 11m31-52 16 17m25-47 15 18m13 26 14 12" />
+      </g>
+      <path className="hand-highlight" d="M42 271c22 9 43 12 63 10m55-82 24-21m14 50 31-24" />
+    </svg>
+  );
+}
+
+export default function Index() {
+  const prefersReducedMotion = useReducedMotion();
+  const pageRef = useRef<HTMLElement>(null);
+  const collaborateRef = useRef<HTMLElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const pointerFrameRef = useRef<number | null>(null);
+  const [contactOpen, setContactOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = ["about", "projects", "contact"];
-      const scrollPosition = window.scrollY + 100;
+    const root = pageRef.current;
+    if (!root) return;
 
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section);
-            break;
-          }
-        }
+    const motionQuery = gsap.matchMedia();
+    motionQuery.add("(prefers-reduced-motion: no-preference)", () => {
+      const context = gsap.context(() => {
+        const opening = gsap.timeline({ defaults: { ease: "power3.out" } });
+        opening
+          .from(".hero-kicker, .hero-title-line, .hero-description, .hero-meta", {
+            y: 28,
+            autoAlpha: 0,
+            duration: 0.9,
+            stagger: 0.12,
+          })
+          .from(
+            ".hero-graphic",
+            { clipPath: "inset(0 0 100% 0)", duration: 1.15, ease: "power4.inOut" },
+            0.2,
+          );
+
+        gsap.utils.toArray<HTMLElement>(".reveal-up").forEach((element) => {
+          gsap.from(element, {
+            y: 38,
+            autoAlpha: 0,
+            duration: 0.9,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: element,
+              start: "top 88%",
+              once: true,
+            },
+          });
+        });
+
+        const strings = gsap.utils.toArray<SVGPathElement>(".collab-string");
+        strings.forEach((path) => {
+          const length = path.getTotalLength();
+          gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
+        });
+        const collaboration = gsap.timeline({
+          scrollTrigger: {
+            trigger: ".collaborate-section",
+            start: "top 75%",
+            once: true,
+          },
+        });
+        strings.forEach((path, index) => {
+          collaboration.to(path, { strokeDashoffset: 0, duration: 1.15, ease: "power2.inOut" }, index * 0.16);
+        });
+        collaboration.fromTo(
+          "#pull-hand",
+          { x: -7, rotation: -3, transformOrigin: "55% 78%" },
+          { x: 0, rotation: 0, duration: 1.2, ease: "back.out(1.4)" },
+          0.3,
+        );
+        collaboration.fromTo(
+          ".collaborate-title, .collaborate-caption",
+          { y: 18, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.75, stagger: 0.15, ease: "power2.out" },
+          0.65,
+        );
+      }, root);
+
+      return () => context.revert();
+    });
+
+    return () => motionQuery.revert();
+  }, []);
+
+  useEffect(() => {
+    const section = collaborateRef.current;
+    if (!section || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const onPointerMove = (event: PointerEvent) => {
+      if (event.pointerType === "touch") return;
+      if (pointerFrameRef.current !== null) return;
+      pointerFrameRef.current = window.requestAnimationFrame(() => {
+        const bounds = section.getBoundingClientRect();
+        const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+        const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+        section.style.setProperty("--pull-x", `${x * 7}px`);
+        section.style.setProperty("--pull-y", `${y * 5}px`);
+        pointerFrameRef.current = null;
+      });
+    };
+
+    section.addEventListener("pointermove", onPointerMove, { passive: true });
+    return () => {
+      section.removeEventListener("pointermove", onPointerMove);
+      if (pointerFrameRef.current !== null) {
+        window.cancelAnimationFrame(pointerFrameRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!contactOpen) return;
+
+    const previousFocus = document.activeElement;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeButtonRef.current?.focus();
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setContactOpen(false);
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const dialog = document.querySelector<HTMLElement>(".contact-dialog");
+      const focusable = dialog?.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled])',
+      );
+      if (!focusable?.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const handleContactSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    toast({
-      title: "Message sent!",
-      description: "Thank you for reaching out. I'll get back to you soon.",
-    });
-    (e.target as HTMLFormElement).reset();
-  };
-
-  const handleNewsletterSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    toast({
-      title: "Subscribed!",
-      description: "You've been added to the newsletter.",
-    });
-    (e.target as HTMLFormElement).reset();
-  };
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", onKeyDown);
+      if (previousFocus instanceof HTMLElement) previousFocus.focus();
+    };
+  }, [contactOpen]);
 
   return (
-    <div className="min-h-screen">
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50 border-b">
-        <div className="container mx-auto px-4">
-          <div className="flex h-16 items-center justify-between">
-            <span className="text-xl font-bold text-primary">Portfolio</span>
-            <div className="flex gap-6">
-              {navigation.map((item) => (
-                item.href.startsWith("#") ? (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className={`text-sm font-medium transition-colors hover:text-primary ${activeSection === item.href.slice(1) ? "text-primary" : "text-muted-foreground"
-                      }`}
-                  >
-                    {item.name}
-                  </a>
-                ) : (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-                  >
-                    {item.name}
-                  </Link>
-                )
-              ))}
+    <main className="portfolio-page" ref={pageRef}>
+      <a className="skip-link" href="#main-content">
+        Skip to content
+      </a>
+
+      <header className="site-header">
+        <a className="wordmark" href="#top" aria-label="Aadesha Biswas, home">
+          AB<span>.</span>
+        </a>
+        <nav className="main-nav" aria-label="Main navigation">
+          <a href="#about">About</a>
+          <a href="#work">Selected work</a>
+          <a href="#experience">Experience</a>
+          <a href="/blog">Journal</a>
+        </nav>
+        <a className="nav-contact" href="#collaborate">
+          Let&apos;s talk <ArrowUpRight size={14} aria-hidden="true" />
+        </a>
+      </header>
+
+      <FlashlightReveal className="hero-section" >
+        <section className="hero-inner" id="top" aria-labelledby="hero-title">
+          <div className="hero-copy">
+            <p className="eyebrow hero-kicker">
+              <span className="eyebrow-dot" />
+              Analytics · AI · Decision systems
+            </p>
+            <h1 className="hero-title" id="hero-title">
+              <span className="hero-title-line">Aadesha</span>
+              <span className="hero-title-line hero-title-last">
+                Biswas<span className="hero-period">.</span>
+              </span>
+            </h1>
+            <div className="hero-description">
+              <p className="hero-role">Analytics &amp; AI Professional</p>
+              <p className="hero-summary">
+                Turning complex data into clearer decisions, thoughtful models,
+                and systems that make work flow better.
+              </p>
+            </div>
+            <div className="hero-meta">
+              <a className="text-link" href="#work">
+                Explore selected work <ArrowDown size={15} aria-hidden="true" />
+              </a>
+              <span className="hero-location">Bengaluru, India</span>
             </div>
           </div>
-        </div>
-      </nav>
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-16 px-4">
-        <div className="container mx-auto text-center">
-          <h1 className="text-5xl font-bold mb-6 animate-fade-in">
-            Datum Axiom
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8 animate-fade-in">
-            Desire to turn your everyday data chaos into smooth, smart systems that actually work for you?
-            Think AI-driven solutions that handle the routine, workflows that fix themselves, and insights that guide better decisions without the guesswork. My focus is simple: help you save time, avoid headaches, and unlock opportunities hiding in plain sight.
-            If you want data-driven clarity and intelligent automation, let's connect.
+          <div className="hero-graphic" aria-label="Editorial data illustration">
+            <div className="graphic-frame">
+              <div className="graphic-topline">
+                <span>FIELD NOTES / 01</span>
+                <span>DATA → DECISIONS</span>
+              </div>
+              <div className="graphic-display">
+                <span className="graphic-outline" aria-hidden="true">SIGNAL</span>
+                <svg className="hero-chart" viewBox="0 0 660 330" role="img" aria-label="An abstract plotted line, representing a signal emerging from data">
+                  <path className="hero-chart-grid" d="M28 52H628M28 108H628M28 164H628M28 220H628M28 276H628M88 24V292M208 24V292M328 24V292M448 24V292M568 24V292" />
+                  <path className="hero-chart-line" d="M28 242C82 233 96 151 153 176S223 224 276 173 347 89 401 130 476 201 522 128 582 75 628 54" />
+                  <path className="hero-chart-line chart-line-ghost" d="M28 269C80 265 111 227 159 237S237 199 284 213 362 186 409 197 481 173 527 182 590 155 628 147" />
+                  <circle className="chart-point chart-point-one" cx="401" cy="130" r="5" />
+                  <circle className="chart-point chart-point-two" cx="522" cy="128" r="5" />
+                </svg>
+                <div className="chart-annotation annotation-left">
+                  <span className="annotation-line" />
+                  <span>Find the<br />useful signal</span>
+                </div>
+                <div className="chart-annotation annotation-right">
+                  <span>OBSERVE<br />01 — 04</span>
+                  <span className="annotation-cross">+</span>
+                </div>
+              </div>
+              <div className="graphic-footline">
+                <span>Pattern recognition / human context</span>
+                <span>FIG. 01</span>
+              </div>
+            </div>
+            <div className="graphic-caption">
+              <span>DATA IS A STARTING POINT.</span>
+              <span>CLARITY IS THE WORK.</span>
+            </div>
+          </div>
+          <span className="hero-index" aria-hidden="true">01 / 06</span>
+        </section>
+      </FlashlightReveal>
+
+      <div className="page-content" id="main-content">
+        <section className="intro-section content-section" id="about">
+          <div className="section-marker reveal-up">
+            <span>01</span><span className="rule" /><span>THE PRACTICE</span>
+          </div>
+          <div className="intro-grid">
+            <h2 className="section-title reveal-up">
+              Good analysis<br />makes room for <em>better questions.</em>
+            </h2>
+            <div className="intro-copy reveal-up">
+              <p>
+                I&apos;m an analytics and machine-learning professional with
+                4+ years of experience across business, finance, insurance,
+                and HR. My work brings together business intelligence,
+                automated reporting, ETL, and applied machine learning.
+              </p>
+              <p>
+                I work closely with stakeholders to turn ambiguous needs into
+                useful, data-informed decisions—pairing technical rigor with
+                context, clear communication, and care for the people who use
+                the result.
+              </p>
+              <a className="text-link" href={resumeUrl} target="_blank" rel="noreferrer">
+                Open résumé <ArrowUpRight size={15} aria-hidden="true" />
+              </a>
+            </div>
+          </div>
+          <div className="intro-footnote reveal-up">
+            <span>BASED IN BENGALURU, INDIA</span>
+            <span>BUSINESS INTELLIGENCE · MODELING · AUTOMATION</span>
+          </div>
+        </section>
+
+        <section className="work-section content-section" id="work">
+          <div className="section-marker reveal-up">
+            <span>02</span><span className="rule" /><span>SELECTED WORK</span>
+          </div>
+          <div className="work-heading">
+            <h2 className="section-title reveal-up">Ideas, in application.</h2>
+            <p className="work-intro reveal-up">
+              Project areas named in my résumé. Each starts with a question;
+              the details belong to the people and context behind the work.
+            </p>
+          </div>
+
+          <div className="projects-list">
+            {projects.map((project, index) => (
+              <article
+                className={`project-story project-story--${project.visual} reveal-up`}
+                key={project.number}
+              >
+                <FlashlightReveal
+                  className={`project-art project-torch project-torch--${project.visual}`}
+                  showToggle={false}
+                >
+                  <ProjectDrawing kind={project.visual} />
+                  <span className="project-art-index">FIELD STUDY / {project.number}</span>
+                  <span className="project-art-note">EDITORIAL VISUALIZATION</span>
+                </FlashlightReveal>
+                <div className="project-copy">
+                  <span className="project-number">{project.number} / 09</span>
+                  <p className="project-category">{project.category}</p>
+                  <h3>{project.title}</h3>
+                  <span className="project-note">{project.note}</span>
+                </div>
+                {index < projects.length - 1 && <span className="project-divider" aria-hidden="true" />}
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="experience-section content-section" id="experience">
+          <div className="section-marker reveal-up">
+            <span>03</span><span className="rule" /><span>EXPERIENCE</span>
+          </div>
+          <div className="experience-heading reveal-up">
+            <h2 className="section-title">A practice built<br />across disciplines.</h2>
+            <p>
+              From customer operations to analytics and modeling—each chapter
+              adds a different lens to the problem.
+            </p>
+          </div>
+          <div className="experience-list">
+            {experiences.map((item) => (
+              <article className="experience-item reveal-up" key={`${item.company}-${item.period}`}>
+                <div className="experience-date">{item.period}</div>
+                <div className="experience-detail">
+                  <h3>{item.company}</h3>
+                  <p className="experience-role">{item.role}</p>
+                  {item.highlights && (
+                    <ul>
+                      {item.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
+                    </ul>
+                  )}
+                </div>
+                <span className="experience-location">{item.location}</span>
+              </article>
+            ))}
+          </div>
+          <div className="education-strip reveal-up">
+            <div>
+              <span className="micro-label">EDUCATION</span>
+              <p>Master of Business Administration <span>Human Resources / Marketing · RDVV · 2019–2021</span></p>
+              <p>Bachelor of Engineering <span>Electronics &amp; Communication · RGPV · 2014–2018</span></p>
+            </div>
+            <a className="text-link" href={resumeUrl} target="_blank" rel="noreferrer">
+              Full experience <ArrowUpRight size={15} aria-hidden="true" />
+            </a>
+          </div>
+        </section>
+
+        <section className="skills-section content-section" id="skills">
+          <div className="section-marker reveal-up">
+            <span>04</span><span className="rule" /><span>THE TOOLKIT</span>
+          </div>
+          <div className="skills-heading reveal-up">
+            <h2 className="section-title">A toolkit for<br /><em>the whole picture.</em></h2>
+            <p>Tools are useful in service of a question—not as an end in themselves.</p>
+          </div>
+          <div className="skills-list">
+            {skillGroups.map((group) => (
+              <div className="skill-row reveal-up" key={group.number}>
+                <span className="skill-number">{group.number}</span>
+                <h3>{group.title}</h3>
+                <p>{group.skills}</p>
+                <span className="skill-plus" aria-hidden="true">+</span>
+              </div>
+            ))}
+          </div>
+          <p className="certification-note reveal-up">
+            CERTIFICATIONS · AI &amp; Business Strategy (PMI) · Advanced Google Analytics (LinkedIn Learning) · Essential Business Analytics (Udemy) · Business Analytics &amp; Intelligence (TheDigitalAdda) · Introduction to Data Analysis (Simplilearn)
           </p>
-          <Button size="lg" asChild className="animate-fade-in">
-            <a href="#contact">Get in Touch</a>
-          </Button>
+        </section>
+      </div>
+
+      <section className="collaborate-section" id="collaborate" ref={collaborateRef}>
+        <div className="collaborate-topline">
+          <span>05 / AN OPEN INVITATION</span>
+          <span>GOOD WORK STARTS WITH A CONVERSATION</span>
         </div>
+        <h2 className="collaborate-title">
+          Something worth<br /><em>figuring out?</em>
+        </h2>
+        <p className="collaborate-caption">
+          Analytics, AI, a knotty process—or simply a good question.
+        </p>
+        <svg className="collaborate-strings" viewBox="0 0 1000 520" preserveAspectRatio="none" aria-hidden="true">
+          <g className="string-group">
+            <path className="collab-string" d="M230 359C335 405 422 372 586 213" />
+            <path className="collab-string" d="M245 372C375 434 466 407 594 239" />
+            <path className="collab-string" d="M262 384C411 464 497 431 602 264" />
+            <path className="collab-string string-highlight" d="M230 359C335 405 422 372 586 213" />
+          </g>
+        </svg>
+        <div className="hand-art">
+          <PullingHand />
+        </div>
+        <motion.button
+        className="collaborate-button"
+          type="button"
+          onClick={() => setContactOpen(true)}
+          whileHover={prefersReducedMotion ? undefined : { y: -5, rotateX: 3, scale: 1.025 }}
+          whileTap={prefersReducedMotion ? undefined : { scale: 0.985, y: 0 }}
+          transition={{ type: "spring", stiffness: 280, damping: 20 }}
+          aria-haspopup="dialog"
+        >
+          <span className="button-sheen" aria-hidden="true" />
+          <span>LET&apos;S COLLABORATE</span>
+          <ArrowUpRight size={19} aria-hidden="true" />
+        </motion.button>
+        <span className="collaborate-footnote">OPEN TO THOUGHTFUL COLLABORATIONS</span>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-16 px-4 bg-muted/50">
-        <div className="container mx-auto">
-          {/* Tools & Expertise */}
-          <div className="mb-16">
-            <h2 className="text-3xl font-bold text-center mb-12">Tools & Expertise</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-              {tools.map((tool) => (
-                
-                <div key={tool.name} className="flex flex-col items-center gap-2">
-                  <img
-                    src={tool.image}
-                    alt={tool.name}
-                    className="w-12 h-12 object-contain"
-                  />
-                  <p className="text-center">{tool.name}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h2 className="text-3xl font-bold text-center mb-12">Services Offered</h2>
-            <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-6">
-              {services.map((service) => (
-                <Card key={service.title} className="hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <service.icon className="w-10 h-10 text-primary mb-4" />
-                    <CardTitle>{service.title}</CardTitle>
-                    <CardDescription>{service.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button variant="outline" className="w-full" asChild>
-                      <a href="#contact">Learn More</a>
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
+      <footer className="site-footer" id="contact">
+        <a className="wordmark footer-mark" href="#top" aria-label="Back to top">
+          AB<span>.</span>
+        </a>
+        <p>Thoughtful work. Clearer decisions.</p>
+        <div className="footer-links">
+          <a href={`mailto:${email}`} aria-label="Email Aadesha Biswas"><Mail size={17} /></a>
+          <a href={linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn profile"><Linkedin size={17} /></a>
+          <a href={github} target="_blank" rel="noreferrer" aria-label="GitHub profile"><Github size={17} /></a>
         </div>
-      </section>
-
-      {/* Projects Section */}
-      <section id="projects" className="py-16 px-4">
-        <div className="container mx-auto">
-          {/* Sample Projects */}
-          <div className="mb-16">
-            <h2 className="text-3xl font-bold text-center mb-12">Sample Projects</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {sampleProjects.map((project) => (
-                <Card key={project.title} className="overflow-hidden hover:shadow-lg transition-shadow">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-48 object-cover"
-                  />
-                  <CardHeader>
-                    <CardTitle>{project.title}</CardTitle>
-                    <CardDescription>{project.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex gap-2">
-                    <Button variant="default" size="sm" className="flex-1" asChild>
-                      <a href={project.link}>View Project</a>
-                    </Button>
-                    <Button variant="outline" size="sm" asChild>
-                      <a href={project.github} aria-label="GitHub">
-                        <Github className="w-4 h-4" />
-                      </a>
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          {/* Digital Products */}
-          {/* <div>
-            <h2 className="text-3xl font-bold text-center mb-12">Digital Products</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {digitalProducts.map((product) => (
-                <Card key={product.title} className="overflow-hidden hover:shadow-lg transition-shadow">
-                  <img
-                    src={product.image}
-                    alt={product.title}
-                    className="w-full h-48 object-cover"
-                  />
-                  <CardHeader>
-                    <CardTitle>{product.title}</CardTitle>
-                    <CardDescription>{product.description}</CardDescription>
-                    <p className="text-2xl font-bold text-primary">{product.price}</p>
-                  </CardHeader>
-                  <CardContent>
-                    <Button className="w-full" asChild>
-                      <a href={product.buyLink}>Buy Now</a>
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div> */}
-        </div>
-      </section>
-
-      {/* Newsletter Section */}
-      <section className="py-16 px-4 bg-muted/50">
-        <div className="container mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold mb-4">Stay Updated</h2>
-          <p className="text-muted-foreground mb-8">
-            Subscribe to my newsletter for the latest insights, tutorials, and project updates.
-          </p>
-          <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-4">
-            <Input
-              type="text"
-              placeholder="Your name"
-              required
-              className="flex-1"
-            />
-            <Input
-              type="email"
-              placeholder="Your email"
-              required
-              className="flex-1"
-            />
-            <Button type="submit">Subscribe</Button>
-          </form>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="py-16 px-4">
-        <div className="container mx-auto max-w-4xl">
-          <h2 className="text-3xl font-bold text-center mb-12">Get in Touch</h2>
-
-          {/* Social Links */}
-          <div className="flex justify-center gap-6 mb-12">
-            <a
-              href="datum.axiom@gmail.com"
-              className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
-              aria-label="Email"
-            >
-              <Mail className="w-6 h-6" />
-            </a>
-            <a
-              href="https://github.com/datumaxiom"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
-              aria-label="GitHub"
-            >
-              <Github className="w-6 h-6" />
-            </a>
-            <a
-              href="https://linkedin.com/in/aadeshabiswas"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
-              aria-label="LinkedIn"
-            >
-              <Linkedin className="w-6 h-6" />
-            </a>
-          </div>
-
-          {/* Contact Form */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Send a Message</CardTitle>
-              <CardDescription>Fill out the form below and I'll get back to you soon.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleContactSubmit} className="space-y-4">
-                <div>
-                  <Input
-                    type="text"
-                    placeholder="Your Name"
-                    required
-                  />
-                </div>
-                <div>
-                  <Input
-                    type="email"
-                    placeholder="Your Email"
-                    required
-                  />
-                </div>
-                <div>
-                  <Textarea
-                    placeholder="Your Message"
-                    required
-                    rows={5}
-                  />
-                </div>
-                <Button type="submit" className="w-full">Send Message</Button>
-              </form>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="py-8 px-4 border-t bg-muted/30">
-        <div className="container mx-auto text-center text-sm text-muted-foreground">
-          <p>© 2025 Datum Axiom -- Crafted with purpose by Aadesha Biswas</p>
-        </div>
+        <span className="footer-copyright">© {new Date().getFullYear()} Aadesha Biswas</span>
       </footer>
-    </div>
-  );
-};
 
-export default Index;
+      <AnimatePresence>
+        {contactOpen && (
+          <motion.div
+            className="contact-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.24 }}
+            onMouseDown={(event) => {
+              if (event.target === event.currentTarget) setContactOpen(false);
+            }}
+          >
+            <motion.section
+              className="contact-dialog"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="contact-title"
+              initial={{ opacity: 0, y: 28, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 14, scale: 0.985 }}
+              transition={
+                prefersReducedMotion
+                  ? { duration: 0 }
+                  : { type: "spring", stiffness: 240, damping: 26 }
+              }
+            >
+              <button
+                className="contact-close"
+                type="button"
+                aria-label="Close contact panel"
+                onClick={() => setContactOpen(false)}
+                ref={closeButtonRef}
+              >
+                <X size={20} aria-hidden="true" />
+              </button>
+              <p className="eyebrow"><span className="eyebrow-dot" /> THE NEXT CHAPTER</p>
+              <h2 id="contact-title">Let&apos;s make<br /><em>something matter.</em></h2>
+              <p className="contact-dialog-copy">
+                Tell me what you&apos;re working through. I&apos;d love to hear about it.
+              </p>
+              <a className="contact-email" href={`mailto:${email}`}>
+                {email}<ArrowRight size={18} aria-hidden="true" />
+              </a>
+              <div className="contact-socials">
+                <a href={linkedin} target="_blank" rel="noreferrer">
+                  <Linkedin size={16} aria-hidden="true" /> LinkedIn <ArrowUpRight size={14} aria-hidden="true" />
+                </a>
+                <a href={github} target="_blank" rel="noreferrer">
+                  <Github size={16} aria-hidden="true" /> GitHub <ArrowUpRight size={14} aria-hidden="true" />
+                </a>
+              </div>
+              <a className="contact-phone" href={`tel:${phone}`}>
+                <Phone size={15} aria-hidden="true" /> +91 83198 42489
+              </a>
+              <a
+                className="start-project-link"
+                href={`mailto:${email}?subject=${encodeURIComponent("Start a project")}`}
+                onClick={() => setContactOpen(false)}
+              >
+                Start a Project <ArrowUpRight size={17} aria-hidden="true" />
+              </a>
+            </motion.section>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </main>
+  );
+}

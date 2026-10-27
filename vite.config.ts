@@ -10,6 +10,22 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules/gsap/")) return "gsap";
+          if (
+            id.includes("node_modules/framer-motion/") ||
+            id.includes("node_modules/motion-dom/") ||
+            id.includes("node_modules/motion-utils/")
+          ) {
+            return "motion";
+          }
+        },
+      },
+    },
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
