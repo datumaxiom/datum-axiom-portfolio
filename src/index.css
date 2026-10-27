@@ -2,19 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-<<<<<<< HEAD
-=======
+
 
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */
 
->>>>>>> e234511995592983ab44ec3f704b30cb631c72dd
+
 @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 220 20% 20%;
-<<<<<<< HEAD
     --card: 0 0% 100%;
     --card-foreground: 220 20% 20%;
     --popover: 0 0% 100%;
@@ -33,7 +31,6 @@ All colors MUST be HSL.
     --input: 214 32% 91%;
     --ring: 217 91% 60%;
     --radius: 0.5rem;
-=======
 
     --card: 0 0% 100%;
     --card-foreground: 220 20% 20%;
@@ -62,22 +59,17 @@ All colors MUST be HSL.
 
     --radius: 0.5rem;
 
->>>>>>> e234511995592983ab44ec3f704b30cb631c72dd
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 220 20% 20%;
     --sidebar-primary: 217 91% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 214 32% 95%;
-<<<<<<< HEAD
-=======
     --sidebar-accent-foreground: 220 20% 20%;
->>>>>>> e234511995592983ab44ec3f704b30cb631c72dd
     --sidebar-border: 214 32% 91%;
     --sidebar-ring: 217 91% 60%;
   }
 
-<<<<<<< HEAD
-=======
+
   .dark {
     --background: 220 20% 12%;
     --foreground: 0 0% 98%;
@@ -119,16 +111,12 @@ All colors MUST be HSL.
 }
 
 @layer base {
->>>>>>> e234511995592983ab44ec3f704b30cb631c72dd
   * {
     @apply border-border;
   }
-
-<<<<<<< HEAD
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 5.5rem;
-=======
   .caveat-header {
     font-family: "Caveat", cursive;
     font-optical-sizing: auto;
@@ -143,13 +131,11 @@ All colors MUST be HSL.
     font-weight: 400;
     color: black;
     font-size: 10px;
->>>>>>> e234511995592983ab44ec3f704b30cb631c72dd
   }
 
   body {
     @apply bg-background text-foreground;
   }
-<<<<<<< HEAD
 }
 
 .portfolio-page {
@@ -1806,7 +1792,7 @@ All colors MUST be HSL.
     display: none;
   }
 }
-=======
+
 
   html {
     scroll-behavior: smooth;
@@ -1820,4 +1806,3 @@ background: linear-gradient(to left, #ffdde1,#ff9ba6, #b9ece9); /* W3C, IE 10+/ 
   }
 }
 /* #E17DC2 43ADD0 ada4e6*/
->>>>>>> e234511995592983ab44ec3f704b30cb631c72dd
